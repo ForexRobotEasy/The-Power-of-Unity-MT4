@@ -1,0 +1,120 @@
+
+```mql5
+//+------------------------------------------------------------------+
+//|                                                      UnityMT4.mq5 |
+//|                           Unity MT4 Expert Advisor               |
+//| The Power of Unity MT4                                          |
+//+------------------------------------------------------------------+
+
+#property copyright 'Unity MT4'
+#property link      'http://www.your-website.com'
+#property version   '1.00'
+
+//--- input parameters
+input double TakeProfit=0.0; 
+input double StopLoss=0.0; 
+input bool FloatingTakeProfit = true; //Floating take-profit system
+
+//--- global variables
+double TakeProfitValue;
+double StopLossValue;
+datetime LastTradeTime;
+
+//+------------------------------------------------------------------+
+//| Expert initialization function                                   |
+//+------------------------------------------------------------------+
+int OnInit()
+  {
+  //--- create timer
+     EventSetTimer(60);
+     //--- initialization done
+        return(INIT_SUCCEEDED);
+          }
+
+          //+------------------------------------------------------------------+
+          //| Expert deinitialization function                                 |
+          //+------------------------------------------------------------------+
+          void OnDeinit(const int reason)
+            {
+            //--- destroy timer
+               EventKillTimer();
+                 }
+
+                 //+------------------------------------------------------------------+
+                 //| Expert tick function                                             |
+                 //+------------------------------------------------------------------+
+                 void OnTick()
+                   {
+                      //--- check if it's time to trade
+                         if(IsNewBar())
+                              {
+                                    //--- place trade
+                                          Trade();
+                                               }
+                                                 }
+
+                                                 //+------------------------------------------------------------------+
+                                                 //| Expert timer function                                            |
+                                                 //+------------------------------------------------------------------+
+                                                 void OnTimer()
+                                                   {
+                                                      //--- update system
+                                                         Update();
+                                                           }
+
+                                                           //+------------------------------------------------------------------+
+                                                           //| Trade function                                                   |
+                                                           //+------------------------------------------------------------------+
+                                                           void Trade()
+                                                             {
+                                                                //--- trading logic goes here
+
+                                                                      //--- floating take profit
+                                                                         if(FloatingTakeProfit)
+                                                                              {
+                                                                                    //--- calculate floating take profit value
+                                                                                          TakeProfitValue = CalculateFloatingTakeProfit();
+                                                                                               }
+                                                                                                  else
+                                                                                                       {
+                                                                                                             //--- use user defined take profit value
+                                                                                                                   TakeProfitValue = TakeProfit;
+                                                                                                                        }
+                                                                                                                          }
+                                                                                                                          
+                                                                                                                          //+------------------------------------------------------------------+
+                                                                                                                          //| Update function                                                  |
+                                                                                                                          //+------------------------------------------------------------------+
+                                                                                                                          void Update()
+                                                                                                                            {
+                                                                                                                               //--- system update logic goes here
+                                                                                                                                 }
+                                                                                                                                 
+                                                                                                                                 //+------------------------------------------------------------------+
+                                                                                                                                 //| IsNewBar function                                                |
+                                                                                                                                 //+------------------------------------------------------------------+
+                                                                                                                                 bool IsNewBar()
+                                                                                                                                   {
+                                                                                                                                      //--- check if a new bar has opened
+                                                                                                                                         if(iTime(Symbol(),0,0)>LastTradeTime)
+                                                                                                                                              {
+                                                                                                                                                    //--- update last trade time
+                                                                                                                                                          LastTradeTime=iTime(Symbol(),0,0);
+                                                                                                                                                                //--- return true
+                                                                                                                                                                      return(true);
+                                                                                                                                                                           }
+                                                                                                                                                                              //--- return false
+                                                                                                                                                                                 return(false);
+                                                                                                                                                                                   }
+                                                                                                                                                                                   
+                                                                                                                                                                                   //+------------------------------------------------------------------+
+                                                                                                                                                                                   //| CalculateFloatingTakeProfit function                             |
+                                                                                                                                                                                   //+------------------------------------------------------------------+
+                                                                                                                                                                                   double CalculateFloatingTakeProfit()
+                                                                                                                                                                                     {
+                                                                                                                                                                                        //--- calculate and return floating take profit value
+                                                                                                                                                                                           return(TakeProfitValue);
+                                                                                                                                                                                             }
+                                                                                                                                                                                             //+------------------------------------------------------------------+
+                                                                                                                                                                                             ```
+                                                                                                                                                                                             
